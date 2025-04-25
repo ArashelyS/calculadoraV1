@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Tablas para Niños</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: #FFF8DC;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #FF6347;
+    }
+
+    .container {
+      background: #F0E68C;
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .animal {
+      width: 100px;
+    }
+
+    .question {
+      font-size: 24px;
+      margin: 20px 0;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      font-size: 18px;
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #32CD32;
+      color: white;
+      font-size: 18px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #228B22;
+    }
+
+    .score {
+      font-size: 20px;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐯 Calculadora de Tablas 🐵</h1>
+  <div class="container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Emoji_u1f98a.svg/1200px-Emoji_u1f98a.svg.png" class="animal" alt="animal">
+    <div class="question" id="question"></div>
+    <input type="number" id="answer" placeholder="¿Cuánto es?">
+    <br>
+    <button onclick="checkAnswer()">Responder</button>
+    <div class="score" id="scoreDisplay">Puntos: 0</div>
+    <div class="score" id="message"></div>
+  </div>
+
+  <script>
+    let score = 0;
+    let currentA = 0;
+    let currentB = 0;
+
+    function generateQuestion() {
+      currentA = Math.floor(Math.random() * 10) + 1;
+      currentB = Math.floor(Math.random() * 10) + 1;
+      document.getElementById('question').textContent = `¿Cuánto es ${currentA} x ${currentB}?`;
+      document.getElementById('answer').value = '';
+      document.getElementById('message').textContent = '';
+    }
+
+    function checkAnswer() {
+      const userAnswer = parseInt(document.getElementById('answer').value);
+      if (userAnswer === currentA * currentB) {
+        score += 5;
+        document.getElementById('message').textContent = '¡Correcto! 🎉';
+        document.getElementById('message').className = 'score success';
+      } else {
+        document.getElementById('message').textContent = '¡Intenta de nuevo! 😢';
+        document.getElementById('message').className = 'score error';
+      }
+      document.getElementById('scoreDisplay').textContent = `Puntos: ${score}`;
+
+      if (score >= 20) {
+        document.getElementById('question').textContent = '🎊 ¡Felicidades, ganaste! 🎊';
+        document.querySelector('button').disabled = true;
+        document.getElementById('answer').disabled = true;
+      } else {
+        setTimeout(generateQuestion, 1500);
+      }
+    }
+
+    generateQuestion();
+  </script>
+</body>
+</html>
